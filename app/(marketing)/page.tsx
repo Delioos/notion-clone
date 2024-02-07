@@ -1,14 +1,19 @@
 import "@/app/globals.css";
 import { Button } from "@/components/ui/button";
+import { Heading } from "./_components/heading";
+import { Heroes } from "./_components/heores";
+import { Footer } from "./_components/footer";
 
-export default function Home() {
+const MarketingPage = () => {
   return (
-    <>
-      <p className="font-bold">Hello notion </p>
-      <Button variant="outline" size="lg">
-        {" "}
-        test{/*  */} button
-      </Button>
-    </>
+    <div className="min-h-full flex flex-col">
+      <div className="flex flex-col items-center justify-center md:justify-start text-center gap-y-8 flex-1 px-6 pb-10">
+        <Heading />
+        <Heroes />
+        <Footer />
+      </div>
+    </div>
   );
 }
+
+export default MarketingPage;
