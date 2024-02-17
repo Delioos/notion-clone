@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { ChevronsLeft, MenuIcon } from "lucide-react";
 import { isResSent } from "next/dist/shared/lib/utils";
 import { usePathname } from "next/navigation";
-import { ElementRef, useRef, useState } from "react";
+import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
 export const Navigation = () => {
@@ -17,6 +17,21 @@ export const Navigation = () => {
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+
+  useEffect(() => {
+    if(isMobile) {
+      collapse();
+    } else {
+      resetWidth();
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (isMobile) {
+      collapse();
+    }
+  }, [pathname, isMobile]);
+
 
   const handleMouseDown = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent> 
@@ -68,6 +83,26 @@ export const Navigation = () => {
     }
   }
 
+  const collapse = () => {
+    if (sidebarRef.current && navbarRef.current) {
+      setIsCollapsed(true);
+      setIsResetting(true);
+      
+      sidebarRef.current.style.width = "0"; 
+      navbarRef.current.style.setProperty(
+        "width",
+        "100%"
+      );
+      navbarRef.current.style.setProperty(
+        "left",
+        "0"
+      );
+
+      setTimeout(() => setIsResetting(false), 300);
+
+    }
+  }
+
   return (
     <>
       <aside
@@ -79,6 +114,7 @@ export const Navigation = () => {
         )}
       >
         <div
+          onClick={collapse}
           ref={navbarRef}
           role="button"
           className={cn(
@@ -109,7 +145,8 @@ export const Navigation = () => {
         )}
       >
         <nav className="bg-transparent px-3 py-2 w-full">
-          {isCollapsed && <MenuIcon role="button" className="h-6 w-6 text-muted-foreground" />}
+          {isCollapsed && <MenuIcon onClick={resetWidth}
+          role="button" className="h-6 w-6 text-muted-foreground" />}
         </nav>
         
       </div>
