@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export const Heading = () => {
-    const {isAuthenticated, isLoading} = useConvexAuth;
+    const {isAuthenticated, isLoading } = useConvexAuth();
 
     return (
         <div className="max-w-3xl space-y-4">
@@ -24,8 +24,8 @@ export const Heading = () => {
                 <Spinner size="lg" />
                 </div>
             )}
-            {isAuthenticated && !isLoading (
-            <Button>
+            {isAuthenticated && !isLoading && (
+            <Button asChild>
                 <Link href="/documents">
                 Enter Jotion
                 <ArrowRight className="h-4 w-4 ml-2" />
@@ -34,8 +34,10 @@ export const Heading = () => {
             )}
             {!isAuthenticated && !isLoading && (
                 <SignInButton mode="modal">
+                    <Button>
                     Get Jotion Free
                     <ArrowRight className="h-4"  />
+                    </Button>
                 </SignInButton>
             )}
         </div>

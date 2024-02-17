@@ -40,7 +40,7 @@ export const Navbar = () => {
         )}
         {isAuthenticated && !isLoading && (
             <>
-                <Button variant="ghost">
+                <Button variant="ghost" size="sm">
                     <Link href="/documents">
                         Enter Jotion
                     </Link>
